@@ -5,7 +5,8 @@
 
 CPPUNIT_NS_BEGIN
 
-
+// m_encoding is set in setEncoding. Ignore -Weffc++ warnings
+#pragma GCC diagnostic ignored "-Weffc++"
 XmlDocument::XmlDocument( const std::string &encoding,
                           const std::string &styleSheet )
   : m_styleSheet( styleSheet )
@@ -14,6 +15,7 @@ XmlDocument::XmlDocument( const std::string &encoding,
 {
   setEncoding( encoding );
 }
+#pragma GCC diagnostic pop
 
 
 XmlDocument::~XmlDocument()

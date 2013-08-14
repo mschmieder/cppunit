@@ -74,6 +74,8 @@ public:
   void removeXmlOutputterHooks();
 
 protected:
+// disable warnings for PODs
+#pragma GCC diagnostic ignored "-Weffc++"
   /*! \brief (INTERNAL) Information about a specific plug-in.
    */
   struct PlugInInfo
@@ -82,6 +84,7 @@ protected:
     DynamicLibraryManager *m_manager;
     CppUnitTestPlugIn *m_interface;
   };
+#pragma GCC diagnostic pop
 
   /*! Unloads the specified plug-in.
    * \param plugIn Information about the plug-in.

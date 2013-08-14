@@ -10,6 +10,8 @@ XmlElement::XmlElement( std::string elementName,
                         std::string content ) 
   : m_name( elementName )
   , m_content( content )
+  , m_attributes()	// fix -Weffc++ warning
+  , m_elements()	// fix -Weffc++ warning
 {
 }
 
@@ -17,6 +19,9 @@ XmlElement::XmlElement( std::string elementName,
 XmlElement::XmlElement( std::string elementName,
                         int numericContent )
   : m_name( elementName )
+  , m_content()		// fix -Weffc++ warning
+  , m_attributes() 	// fix -Weffc++ warning
+  , m_elements()    // fix -Weffc++ warning
 {
   setContent( numericContent );
 }
