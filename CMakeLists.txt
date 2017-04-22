@@ -15,8 +15,6 @@ endif()
 
 project("cppunit")
 
-# Add default option to build shared libraries
-option(BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if ON" ON)
 
 # set cppunit version
 set(CPPUNIT_MAJOR_VERSION 1)
@@ -30,6 +28,16 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # invokes checks for compiler and system specifics
 include(autoconf)
+
+# Add default option to build shared libraries
+option(BUILD_SHARED_LIBS       "Global flag to cause add_library to create shared libraries if ON" ON)
+option(CPPUNIT_BUILD_TESTING   "Enables testing with CTest and adds a 'test' target"               OFF)
+option(CPPUNIT_BUILD_EXAMPLES  "Enables the build of all exmaples"                                 OFF)
+option(CPPUNIT_BUILD_APIDOC    "Enables the build of api doc"                                      OFF)
+
+if(CPPUNIT_BUILD_TESTING)
+    enable_testing()
+endif()
 
 # after having checked all defines, create config file
 configure_file(config.h.in.cmake ${PROJECT_BINARY_DIR}/cppunit/config-auto.h)
@@ -45,9 +53,13 @@ include_directories(${PROJECT_BINARY_DIR})
 # add source directory
 add_subdirectory("src")
 
-option(CPPUNIT_BUILD_EXAMPLES "enables the build of all exmaples" OFF)
+
 if(CPPUNIT_BUILD_EXAMPLES)
   add_subdirectory("examples")
+endif()
+
+if(CPPUNIT_BUILD_APIDOC)
+    add_subdirectory("doc")
 endif()
 
 # install public headers

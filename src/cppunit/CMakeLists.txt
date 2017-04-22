@@ -41,7 +41,6 @@ set(CPPUNIT_SRC
     TextTestResult.cpp
     TextTestRunner.cpp
     TypeInfoHelper.cpp
-    Win32DynamicLibraryManager.cpp
     UnixDynamicLibraryManager.cpp
     XmlDocument.cpp
     XmlElement.cpp
@@ -57,10 +56,30 @@ set(CPPUNIT_HEADER
 # on windows shared build we need to add the DllMain.cpp
 if(WIN32 AND BUILD_SHARED_LIBS)
     list(APPEND CPPUNIT_SRC 
-                DllMain.cpp)
+                DllMain.cpp    
+                Win32DynamicLibraryManager.cpp)
+endif()
+
+# Platform specific source files
+# Microsoft Windows
+if(WIN32)
+    list(APPEND CPPUNIT_SRC
+        DllMain.cpp
+        Win32DynamicLibraryManager.cpp)
+# Unix based systems
+elseif(UNIX)
+    list(APPEND CPPUNIT_SRC
+        UnixDynamicLibraryManager.cpp)
+    if(CPPUNIT_HAVE_UNIX_SHL_LOADER)
+        list(APPEND CPPUNIT_SRC
+             ShlDynamicLibraryManager.cpp)
+    endif()
+# BeOS
+elseif(CMAKE_SYSTEM_NAME MATCHES "BeOS.*")
+    list(APPEND CPPUNIT_SRC
+         BeOsDynamicLibraryManager.cpp)
 endif()
            
-
 # add the cppunit library
 add_library(cppunit ${CPPUNIT_SRC} ${CPPUNIT_HEADER})
 
@@ -68,6 +87,8 @@ add_library(cppunit ${CPPUNIT_SRC} ${CPPUNIT_HEADER})
 target_include_directories(cppunit PUBLIC
                            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                            $<INSTALL_INTERFACE:include>)
+
+target_link_libraries(cppunit ${CPPUNIT_COMMON_LIBS})
 
 if(WIN32 AND BUILD_SHARED_LIBS)
   # windows dlls have specific naming so let's set them up correctly

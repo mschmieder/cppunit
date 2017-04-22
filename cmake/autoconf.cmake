@@ -71,6 +71,27 @@ if(HAVE_CXX11)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
+check_library_exists(dl dlopen dlfcn.h CPPUNIT_HAVE_LIBDL)
+check_library_exists(dl dlerror dlfcn.h CPPUNIT_HAVE_DLERROR)
+if(CPPUNIT_HAVE_LIBDL)
+    list(APPEND CPPUNIT_COMMON_LIBS "dl")
+endif()
+
+if(NOT CPPUNIT_HAVE_LIBDL)
+    check_library_exists(svld dlopen dlfcn.h CPPUNIT_HAVE_LIBDL)
+    check_library_exists(svld dlerror dlfcn.h CPPUNIT_HAVE_DLERROR)
+    if(CPPUNIT_HAVE_LIBDL)
+        list(APPEND CPPUNIT_COMMON_LIBS "svld")
+    endif()
+endif()
+
+check_library_exists(dld dld_link dld.h CPPUNIT_HAVE_DLD)
+check_library_exists(dld shl_load dld.h CPPUNIT_HAVE_UNIX_SHL_LOADER)
+if(CPPUNIT_HAVE_UNIX_SHL_LOADER)
+    list(APPEND CPPUNIT_COMMON_LIBS "dld")
+endif()
+
+
 check_include_file_cxx(sstream CPPUNIT_HAVE_SSTREAM)
 check_include_file_cxx(strstream CPPUNIT_HAVE_STRSTREAM)
 
