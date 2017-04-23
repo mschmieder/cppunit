@@ -1,14 +1,9 @@
 language: cpp
 
-os:
-  - linux
-  - osx
-
 branches:
   only:
   - gh-pages
   - /.*/
-
 
 compiler:
 - gcc
