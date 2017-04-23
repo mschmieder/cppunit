@@ -15,3 +15,24 @@ bugs.documentfoundation.org under the component cppunit.
 Email to the current maintainers may be sent to
 <libreoffice@lists.freedesktop.org>
 
+# CMake Build System
+This fork of the original CppUnit project adds CMake build system support to the newest sources found on the mainline. To configure and build the project follow the instructions listed here.
+
+The CMake scripts offer the following options:
+   * __BUILD_SHARED_LIBS__      - Enables shared libraries
+   * __CPPUNIT_BUILD_APIDOC__   - Enables doxygen documentation build if 'doxygen' can be found
+   * __CPPUNIT_BUILD_EXAMPLES__ - Enables the build of the sample applications and libraries
+   * __CPPUNIT_BUILD_TESTING__  - Enables test executables that can be run by CTest
+
+Use the following commands to configure with your favorite generator.
+
+```
+git clone https://github.com/mschmieder/cppunit
+
+mkdir cppunit_build
+cd cppunit_build
+
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_SHARED_LIBS:BOOL=ON ../cppunit -DCMAKE_INSTALL_PREFIX:STRING=install
+
+cmake --build . --config Debug --target=install
+```
