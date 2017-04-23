@@ -1,4 +1,8 @@
 language: cpp
+branches:
+  only:
+  - gh-pages
+  - /.*/
 compiler:
 - gcc
 - clang
@@ -16,13 +20,8 @@ before_script:
 script:
 - cmake --build . --config Debug --target install
 - cmake --build . --config Release --target install
-branches:
-  only:
-  - gh-pages
-  - /.*/
-before_deploy:
-  - cd install
-  - tar cfzv ../cppunit.tar *
+- cd install
+- tar cfzv ../cppunit.tar *
 deploy:
   provider: releases
   api_key:
