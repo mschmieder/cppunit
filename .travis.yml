@@ -14,9 +14,9 @@ before_script:
   - cd build
   - cmake --version
   - cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. -DCMAKE_INSTALL_PREFIX=install
-  - cmake --build . --config Release --target install 
+script: 
   - cmake --build . --config Debug --target install
-script: make -j
+  - cmake --build . --config Release --target install 
 branches:
   only:
     - gh-pages
