@@ -9,8 +9,11 @@ before_install
   - sudo apt-get -qq update
   - sudo apt-get install -y doxygen cmake
 before_script:
+  - cmake --version
   - mkdir build
   - cd build
   - cmake --version
-  - cmake -DCMAKE_VERBOSE_MAKEFILE=ON ..
+  - cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. -DCMAKE_INSTALL_PREFIX=install
+  - cmake --build . --config Release --target install 
+  - cmake --build . --config Debug --target install
 script: make -j
