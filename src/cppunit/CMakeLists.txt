@@ -101,7 +101,7 @@ if(WIN32 AND BUILD_SHARED_LIBS)
   # cppunitd_dll.lib    : CppUnit dynamic import library "Debug Multithreaded DLL"
   set_target_properties(cppunit
                         PROPERTIES
-                        DEBUG_POSTIX "d_dll"
+                        DEBUG_POSTFIX "d_dll"
                         RELEASE_POSTFIX "_dll")
 
   # add flags for dll exports
