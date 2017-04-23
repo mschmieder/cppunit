@@ -1,23 +1,32 @@
 language: cpp
 compiler:
-  - gcc
-  - clang
-# trusty (14.04) is now used instead of precise (12.04)
+- gcc
+- clang
 sudo: required
 dist: trusty
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y doxygen cmake
+- sudo apt-get -qq update
+- sudo apt-get install -y doxygen cmake
 before_script:
-  - cmake --version
-  - mkdir build
-  - cd build
-  - cmake --version
-  - cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. -DCMAKE_INSTALL_PREFIX=install
-script: 
-  - cmake --build . --config Debug --target install
-  - cmake --build . --config Release --target install 
+- cmake --version
+- mkdir build
+- cd build
+- cmake --version
+- cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. -DCMAKE_INSTALL_PREFIX=install
+script:
+- cmake --build . --config Debug --target install
+- cmake --build . --config Release --target install
 branches:
   only:
-    - gh-pages
-    - /.*/
+  - gh-pages
+  - /.*/
+before_deploy:
+  -  tar cfzv cppunit.tar install/*
+deploy:
+  provider: releases
+  api_key:
+    secure: xDamJYDMwtLp+ytU+SDzSjsO3ajvtJ3b+IFhQf0QsHwuxPtuiGfqc88PHuvqFvHxpHZSuLr9FUef/n+p5c7JMeYKtUBeCWa8YD1ajpQUS3v8ifvTBiXZRZLqPqzKzv4K+uYFIz4e/mXSRcE/mSeInBLtWfLA0SmiSf3jhhLRDlxk6NX9/c26CSkmSNs3eAkQenaTC1pXMqGgrFt8ZoJHiC9VJQHE8+0KZUbC+MdUjWofRd/2BLFNQaQfQan/fZPr83Hc0kHpzpezwqKFDMYSmP2erElWn3hQ9W+A0txV76yhN0X8FzdBMRMhgYvILeZW1efi9gZaQ1aCp2z8cHkSUqkgmmg2Im22swY2CdQ3qLQwIpTqtqwWYDwh2gfYUDvaqHU9MMIcMlbgm2bJ//reK359eqNdO9aVsEU6n9fjINjlWQ404jmJWvhxtQ+IWRi4Au/xMO/Oamea3uNgUzDGbN5bilvy47UZaRhBO5wd4W7kHU84St1DCdappObUKpfoyGccI8Nx+zlMYLbgdyQq9es27bm4+mM0C2MjDOrS037B+k3G5+Z5BIRxdMSOAxOKoSRcdES7WmVrs/0dtefa0oRQmI1oNWvVfzSthLpWgMCPqHh7E46k4AWOm0sAwm+regkwELoE0PbjLUQ3cjTQ8O1CKxC+ZW850O/2U1VGQ88=
+  file: cppunit.tar
+  on:
+    repo: mschmieder/cppunit
+    branch: travisci
