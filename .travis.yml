@@ -17,3 +17,7 @@ before_script:
   - cmake --build . --config Release --target install 
   - cmake --build . --config Debug --target install
 script: make -j
+branches:
+  only:
+    - gh-pages
+    - /.*/
