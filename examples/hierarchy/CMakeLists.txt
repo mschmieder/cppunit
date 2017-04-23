@@ -12,7 +12,8 @@ add_executable(hierarchy ${HIERARCHY_SRC})
 target_link_libraries(hierarchy cppunit)
 
 set_target_properties(hierarchy PROPERTIES 
-                      DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+  DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
 install(TARGETS hierarchy
-  RUNTIME DESTINATION "bin")
+  RUNTIME DESTINATION "bin"
+  COMPONENT "misc")

@@ -119,7 +119,8 @@ install(TARGETS cppunit EXPORT cppunit-exports
         INCLUDES DESTINATION "include"
         RUNTIME DESTINATION "bin"
         LIBRARY DESTINATION "lib"
-        ARCHIVE DESTINATION "lib")
+        ARCHIVE DESTINATION "lib"
+        COMPONENT "Library")
 
 # create cmake export for cppunit for easy import into other cmake projects
 install(EXPORT cppunit-exports

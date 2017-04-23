@@ -12,16 +12,17 @@ set(CLOCKER_PLUGIN_SRC
   ClockerXmlHook.cpp
 )
 
-# create executable
-add_executable(ClockerPlugin ${CLOCKER_PLUGIN_SRC})
+# add library target
+add_library(ClockerPlugin
+   ${CLOCKER_PLUGIN_SRC})
 
 # link against cppunit
 target_link_libraries(ClockerPlugin cppunit)
 
-# set executable debug postfix
-set_target_properties(ClockerPlugin PROPERTIES 
-                      DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
-
-# install target to <INSTALL_PREFIX>/bin folder
-install(TARGETS ClockerPlugin
-        RUNTIME DESTINATION "bin")
+# setup install routine for ClockerPlugin target 
+install(TARGETS ClockerPlugin EXPORT cppunit-exports
+    COMPONENT "misc"
+    INCLUDES DESTINATION "include"
+    RUNTIME DESTINATION "bin"
+    LIBRARY DESTINATION "lib"
+    ARCHIVE DESTINATION "lib")

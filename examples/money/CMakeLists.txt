@@ -18,4 +18,5 @@ set_target_properties(money PROPERTIES
 
 # install target to <INSTALL_PREFIX>/bin folder
 install(TARGETS money
-  RUNTIME DESTINATION "bin")
+  RUNTIME DESTINATION "bin"
+  COMPONENT "misc")
