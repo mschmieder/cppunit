@@ -9,7 +9,7 @@ install_brew_package() {
   else
     # Package not installed yet, install.
     # If there are conflicts, try overwriting the files (these are in /usr/local anyway so it should be ok).
-    brew install "$@"
+    brew install "$@" || brew link --overwrite gcc49
   fi
 }
 

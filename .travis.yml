@@ -37,7 +37,7 @@ matrix:
   - compiler: gcc
     env: COMPILER=gcc-6 OS=osx
     os: osx
-    osx_image: xcode8.2
+    osx_image: xcode8
     install:
     - travis/travis_ci_install_osx.sh
     script:
@@ -51,7 +51,7 @@ matrix:
   - compiler: clang
     env: COMPILER=clang-4.0 STL=libc++ OS=osx
     os: osx
-    osx_image: xcode8.2
+    osx_image: xcode8
     install:
     - travis/travis_ci_install_osx.sh
     script:
@@ -65,14 +65,14 @@ matrix:
   - compiler: clang
     env: COMPILER=clang-default STL=libc++ OS=osx
     os: osx
-    osx_image: xcode8.2
+    osx_image: xcode8
     install:
     - travis/travis_ci_install_osx.sh
     script:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_xcode8.2.tar *
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_xcode8.tar *
 services:
 - docker
 sudo: required
