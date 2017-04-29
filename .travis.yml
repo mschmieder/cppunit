@@ -3,9 +3,6 @@ language: cpp
 matrix:
   fast_finish: true
   include:
-# ############################################################################
-# Linux GCC BUILDS
-# ############################################################################
   - compiler: gcc
     env: OS=linux COMPILER=gcc-6 UBUNTU=17.04
     install:
@@ -16,10 +13,8 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     - sudo chown -R $USER:$USER *
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
-# ############################################################################
-# Linux Clang BUILDS
-# ############################################################################
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar
+      *
   - compiler: clang
     env: OS=linux COMPILER=clang-4.0 UBUNTU=17.04
     install:
@@ -30,10 +25,8 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     - sudo chown -R $USER:$USER *
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
-# ############################################################################
-# OSX GCC BUILDS
-# ############################################################################
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar
+      *
   - compiler: gcc
     env: COMPILER=gcc-6 OS=osx
     os: osx
@@ -44,10 +37,8 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
-# ############################################################################
-# OSX CLANG BUILDS
-# ############################################################################
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar
+      *
   - compiler: clang
     env: COMPILER=clang-4.0 STL=libc++ OS=osx
     os: osx
@@ -58,10 +49,8 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
-# ############################################################################
-# OSX XCODE BUILDS
-# ############################################################################
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar
+      *
   - compiler: clang
     env: COMPILER=clang-default STL=libc++ OS=osx
     os: osx
@@ -72,7 +61,8 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
     - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     after_success:
-    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_xcode8.tar *
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_xcode8.tar
+      *
 services:
 - docker
 sudo: required
@@ -80,7 +70,7 @@ sudo: required
 deploy:
   provider: releases
   api_key:
-    secure: tGCG6Qc8vlSXTfTOmWMgp0jAH5STilONMCxuk7Qi9Y+Li6j6hNZYCBfuYggO163CuNQEYhhlqm1so5mh9Ycr7c9Ox3dECem0je8maKeY6WNyIonK4tvKEdsAaIgeiUsQb4iPgy1lOCEqZSUjStPBZ80MinLYnbrheCYzi+D5lC5wkRw4liMnlyEMArSjC5ykndU5ZPXnTL1lL1mqvyrCGoXVSMiF4zn2SPOSN2lMafghgLssTX1NqreP/FrdVcA8ps49RVUMza6Yy7XvTkBGOMKdc9X0DjRGQ1aFicy05CZ7L2l+OYAAG9ncDQeDkK7R1IoaDiN49RMiwRpDsKdO0WydSxFFMrY7vh7HTX+eGMdFIwlLvv1lxQwYdNlwjTGkVrW5cxD4XizYdkjKC7Q9HE/2DI7YLRj8ZyRpzeePhxJBnvBaHoVINsZukp5UXKi4hpaNqQit2Qq67KuBcsKwntLg3wKBdfstTeLD1KEmZHGMm2B9UWrX8S0E9z/ArKo1cufBvMCubt54GT1FzTs8EiosSfeeIF/1FmAE9p+UySjIMDhurp2ZkNpUazX3tx1Lft19paBUg6jTb/1SF38p2IoK8i2l0jI2zSo/vb5V9ZNZfZE3j/LHf3AcbSIuHLM+yzxV3Znwl5E/AjTvEFbD9ASMaR2efVNzeqWswS5oCvA=
+    secure: O4cJk4Y4qx8SDO3NOa9HR0V0MrYyHHkTMRrIHPXR55W496du+rBmQnMaDpzBDbtz0J2It+p4UJEvyI4QDYShHZrNZP7Y4+CU2Tv9IBeX4HRz5xBuLlIIYicW5j6tvQOb7UOMposzikxGeEodr5KrOA7e0OKiYDc6A+iuVXnUv/Cn99BuUqtIDMfBwn/4RTD8E2KfUcrjeEspXnqVJYSa20HA4IA83TaL5HiNsPBNXgHgLWDLVpYGoEPUu90e9P9ENN66FOHf2k16kEtdd6cWUprZUthfx5dfs4lAP49WuI/XRrjrKAY94vBu1RRwS2XeSeKr/d0+9ZFHhGS4RsdOBukTuEr0w3YihhR3/Vqq9+ErfZKTAx/PLKVp4I0Knwmr707OJKdfnOrOQ8MC1R/ifvhuaHXTNJzKaD4dgwulKLxyxv6vQAJNu7kZ+wXR8AJav48UpYsypMrWAUmpInu7cStYMmWhtkZTbGko6+RYhZYI7ekuEPuNfyL2B3XhGKb2qS89TkBcm9YpS1kNc8Q3Wdjw+/FsIHRLUivZiBRJly8Sn4ulFx2Vh/mZN97W4x2v9Rn+m+yXJ+SImM7MT01mldzj5XdDGHBkBrxsHut7WpP6whceKOUoKDARW5J5CRjcovZOtNX2E8isssH67HqEkdDFPgXLgFfn8/XBl4/u8dc=
   file_glob: true
   file: ${TRAVIS_BUILD_DIR}/build/cppunit_*.tar
   skip_cleanup: true
