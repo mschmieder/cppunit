@@ -19,7 +19,7 @@ linux)
         export STLARG=$STLARG; 
         export OS=$OS;
         cd ${PROJECT_NAME}
-        bash scripts/postsubmit-helper.sh ${SRC_ROOT} $@"
+        bash travis/postsubmit-helper.sh ${SRC_ROOT} $@"
     exit $?
     ;;
 
@@ -28,7 +28,7 @@ osx)
     export N_JOBS
     export STLARG
     export OS
-    bash scripts/postsubmit-helper.sh ${SRC_ROOT} $@
+    bash travis/postsubmit-helper.sh ${SRC_ROOT} $@
     exit $?
     ;;
 
