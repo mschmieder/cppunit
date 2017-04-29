@@ -6,11 +6,11 @@ matrix:
   - compiler: gcc
     env: OS=linux COMPILER=gcc-6 UBUNTU=17.04 TEST=Debug
     install:
-    - scripts/travis_ci_install_linux.sh
+    - travis/travis_ci_install_linux.sh
     os: linux
     script:
-    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh cppunit "." Debug
-    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh cppunit "." Release
+    - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
+    - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     - sudo chown -R $USER:$USER *
     after_success:
     - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
@@ -19,10 +19,10 @@ matrix:
     os: osx
     osx_image: xcode8
     install:
-    - scripts/travis_ci_install_osx.sh
+    - travis/travis_ci_install_osx.sh
     script:
-    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh cppunit "." Debug
-    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh cppunit "." Release
+    - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Debug
+    - cd ${TRAVIS_BUILD_DIR}/ && travis/postsubmit.sh cppunit "." Release
     after_success:
     - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
 services:
