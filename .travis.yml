@@ -1,33 +1,41 @@
-language: cpp
-branches:
-  only:
-  - gh-pages
-  - /.*/
-compiler:
-- gcc
-- clang
-sudo: required
 dist: trusty
+language: cpp
+matrix:
+  fast_finish: true
+  include:
+  - compiler: gcc
+    env: OS=linux COMPILER=gcc-6 UBUNTU=17.04 TEST=Debug
+    install:
+    - scripts/travis_ci_install_linux.sh
+    os: linux
+    script:
+    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh travis-sandbox cppunit Debug
+    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh travis-sandbox cppunit Release
+    - sudo chown -R $USER:$USER *
+    after_success:
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
+  - compiler: clang
+    env: COMPILER=clang-4.0 STL=libc++ TEST=Debug OS=osx
+    os: osx
+    osx_image: xcode8
+    install:
+    - scripts/travis_ci_install_osx.sh
+    script:
+    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh travis-sandbox cppunit Debug
+    - cd ${TRAVIS_BUILD_DIR}/ && scripts/postsubmit.sh travis-sandbox cppunit Release
+    after_success:
+    - cd ${TRAVIS_BUILD_DIR}/build/install && tar cfzv ../cppunit_${OS}_${COMPILER}.tar *
+services:
+- docker
+sudo: required
 
-before_install:
-- sudo apt-get -qq update
-- sudo apt-get install -y doxygen cmake
-before_script:
-- cmake --version
-- mkdir build
-- cd build
-- cmake --version
-- cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. -DCMAKE_INSTALL_PREFIX=install
-script:
-- cmake --build . --config Debug --target install
-- cmake --build . --config Release --target install
-- cd install
-- tar cfzv ../cppunit.tar *
-- cd ..
 deploy:
   provider: releases
   api_key:
-    secure: xDamJYDMwtLp+ytU+SDzSjsO3ajvtJ3b+IFhQf0QsHwuxPtuiGfqc88PHuvqFvHxpHZSuLr9FUef/n+p5c7JMeYKtUBeCWa8YD1ajpQUS3v8ifvTBiXZRZLqPqzKzv4K+uYFIz4e/mXSRcE/mSeInBLtWfLA0SmiSf3jhhLRDlxk6NX9/c26CSkmSNs3eAkQenaTC1pXMqGgrFt8ZoJHiC9VJQHE8+0KZUbC+MdUjWofRd/2BLFNQaQfQan/fZPr83Hc0kHpzpezwqKFDMYSmP2erElWn3hQ9W+A0txV76yhN0X8FzdBMRMhgYvILeZW1efi9gZaQ1aCp2z8cHkSUqkgmmg2Im22swY2CdQ3qLQwIpTqtqwWYDwh2gfYUDvaqHU9MMIcMlbgm2bJ//reK359eqNdO9aVsEU6n9fjINjlWQ404jmJWvhxtQ+IWRi4Au/xMO/Oamea3uNgUzDGbN5bilvy47UZaRhBO5wd4W7kHU84St1DCdappObUKpfoyGccI8Nx+zlMYLbgdyQq9es27bm4+mM0C2MjDOrS037B+k3G5+Z5BIRxdMSOAxOKoSRcdES7WmVrs/0dtefa0oRQmI1oNWvVfzSthLpWgMCPqHh7E46k4AWOm0sAwm+regkwELoE0PbjLUQ3cjTQ8O1CKxC+ZW850O/2U1VGQ88=
-  file: cppunit.tar
+    secure: tGCG6Qc8vlSXTfTOmWMgp0jAH5STilONMCxuk7Qi9Y+Li6j6hNZYCBfuYggO163CuNQEYhhlqm1so5mh9Ycr7c9Ox3dECem0je8maKeY6WNyIonK4tvKEdsAaIgeiUsQb4iPgy1lOCEqZSUjStPBZ80MinLYnbrheCYzi+D5lC5wkRw4liMnlyEMArSjC5ykndU5ZPXnTL1lL1mqvyrCGoXVSMiF4zn2SPOSN2lMafghgLssTX1NqreP/FrdVcA8ps49RVUMza6Yy7XvTkBGOMKdc9X0DjRGQ1aFicy05CZ7L2l+OYAAG9ncDQeDkK7R1IoaDiN49RMiwRpDsKdO0WydSxFFMrY7vh7HTX+eGMdFIwlLvv1lxQwYdNlwjTGkVrW5cxD4XizYdkjKC7Q9HE/2DI7YLRj8ZyRpzeePhxJBnvBaHoVINsZukp5UXKi4hpaNqQit2Qq67KuBcsKwntLg3wKBdfstTeLD1KEmZHGMm2B9UWrX8S0E9z/ArKo1cufBvMCubt54GT1FzTs8EiosSfeeIF/1FmAE9p+UySjIMDhurp2ZkNpUazX3tx1Lft19paBUg6jTb/1SF38p2IoK8i2l0jI2zSo/vb5V9ZNZfZE3j/LHf3AcbSIuHLM+yzxV3Znwl5E/AjTvEFbD9ASMaR2efVNzeqWswS5oCvA=
+  file_glob: true
+  file: ${TRAVIS_BUILD_DIR}/build/cppunit_*.tar
+  skip_cleanup: true
   on:
     tags: true
+    all_branches: true
