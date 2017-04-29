@@ -1,6 +1,6 @@
-		CppUnit --- The C++ Unit Test Library
-		-------------------------------------
-            http://www.freedesktop.org/wiki/Software/cppunit
+# CppUnit --- The C++ Unit Test Library 
+-------------------------------------
+http://www.freedesktop.org/wiki/Software/cppunit
 
 CppUnit is the C++ port of the famous JUnit framework for unit
 testing.
@@ -36,3 +36,15 @@ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_SHARED_LIBS:BO
 
 cmake --build . --config Debug --target=install
 ```
+
+## Continuous Integration
+[![Build Status](https://travis-ci.org/mschmieder/cppunit.svg?branch=master)](https://travis-ci.org/mschmieder/cppunit)
+
+This fork of cppunit is build with travis-ci on Linux and OS X using the following compilers
+   * Linux (Ubuntu 17.04)
+       - gcc-6
+       - clang-4.0
+    * OS X
+       - gcc-6
+       - clang-4.0
+       - XCode 8.2
