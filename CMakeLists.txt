@@ -64,5 +64,5 @@ endif()
 
 # install public headers
 install(DIRECTORY "include/cppunit"
-        DESTINATION "include/cppunit")
+        DESTINATION "include")
 
