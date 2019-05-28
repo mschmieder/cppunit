@@ -115,7 +115,7 @@ set_target_properties(cppunit
                       SOVERSION ${CPPUNIT_SOVERSION}) 
 
 # setup install routine for cppunit target 
-install(TARGETS cppunit EXPORT cppunitConfig
+install(TARGETS cppunit EXPORT cppunit-config
         INCLUDES DESTINATION "include"
         RUNTIME DESTINATION "bin"
         LIBRARY DESTINATION "lib"
@@ -123,5 +123,5 @@ install(TARGETS cppunit EXPORT cppunitConfig
         COMPONENT "Library")
 
 # create cmake export for cppunit for easy import into other cmake projects
-install(EXPORT cppunitConfig
+install(EXPORT cppunit-config
         DESTINATION "cmake")
